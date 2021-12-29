@@ -17,10 +17,10 @@ class Article(models.Model):
         return self.title
 
 
-class Scope(models.Model):
+class Tag(models.Model):
 
     name = models.CharField(max_length=40, verbose_name='Тэг')
-    articles = models.ManyToManyField(Article, related_name='scopes', through='Relationship')
+    articles = models.ManyToManyField(Article, related_name='tags', through='Scope')
 
     class Meta:
         verbose_name = 'Тэг'
@@ -31,11 +31,11 @@ class Scope(models.Model):
         return self.name
 
 
-class Relationship(models.Model):
+class Scope(models.Model):
 
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_relations')
-    scope = models.ForeignKey(Scope, on_delete=models.CASCADE, related_name='scope_relations')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='scopes')
     is_main = models.BooleanField(verbose_name='Основной', default=False)
 
     class Meta:
-        ordering = ['is_main']
+        ordering = ['-is_main']

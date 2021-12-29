@@ -1,13 +1,10 @@
 from django.shortcuts import render
 
-from articles.models import Article, Relationship
+from articles.models import Article
 
 
 def articles_list(request):
     template = 'articles/news.html'
-    object_list = Article.objects.prefetch_related('scopes')
-    relationship = Relationship.objects.select_related('scope', 'article')
-
-    context = {'object_list': object_list, 'data': relationship}
-
+    object_list = Article.objects.all().prefetch_related('scopes__tag')
+    context = {'object_list': object_list}
     return render(request, template, context)
