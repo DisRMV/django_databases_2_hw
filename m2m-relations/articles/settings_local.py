@@ -1,14 +1,14 @@
 import os
 from website.settings import BASE_DIR
 
-SECRET_KEY = 'b0e@^m&tccz11$w59qov$lhn-97!(%wfn-gray-c*x)^a$wx=3'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netology_hw_articles',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': os.getenv('USER_DB'),
+        'PASSWORD': os.getenv('PASS_DB'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
